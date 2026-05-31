@@ -3,11 +3,9 @@ import random
 
 def update_binary(self):
         self.binary_text.config(state=tk.NORMAL)
-        
-        # Insert new line at the top
         self.binary_text.insert('1.0', self.generate_binary_line() + '\n')
         
-        # Remove the last line if we have too many
+        # Remove last ln if too many
         line_count = int(self.binary_text.index('end-1c').split('.')[0])
         if line_count > 20:
             self.binary_text.delete('20.0', 'end')
@@ -21,3 +19,6 @@ def update_binary(self):
         
         self.binary_text.config(state=tk.DISABLED)
         self.root.after(150, self.update_binary)
+
+        def generate_binary_line(self):
+    return ''.join(random.choice('01') for _ in range(12))
