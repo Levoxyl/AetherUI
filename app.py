@@ -1,5 +1,5 @@
 import tkinter as tk
-from themes.default import defaultInterface
+from themes.default import DefaultTheme
 
 def main():
     root = tk.Tk()
@@ -12,7 +12,7 @@ def main():
     root.configure(bg='black')
     root.attributes('-fullscreen', True)
 
-    app = defaultInterface(root, screen_w, screen_h)
+    app = DefaultTheme(root, screen_w, screen_h)
     root.mainloop()
 
     def log_resize(event):

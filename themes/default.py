@@ -1,4 +1,8 @@
 import tkinter as tk
+import os 
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'components'))
+
 from visualization import VisualizationComponent
 from binary import BinaryComponent
 from hex import HexComponent
