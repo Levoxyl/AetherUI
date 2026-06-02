@@ -1,6 +1,8 @@
 import tkinter as tk
 from visualization import VisualizationComponent
 from binary import BinaryComponent
+from hex  import HexComponent
+from terminal import TerminalComponent
 
 class HackerInterface:
     def __init__(self, root):
