@@ -1,15 +1,17 @@
 import tkinter as tk
 import random
 
+from colors import Colors
+
 class BinaryComponent:
     def __init__(self, frame, root):
         self.frame = frame
         self.root = root
 
         self.text = tk.Text(
-            self.frame, bg='black', fg='#00FF00',
+            self.frame, bg='black', fg=Colors.NEON_GREEN,
             font=('Courier New', 14), width=12, height=20,
-            insertbackground='#00FF00', relief='flat',
+            insertbackground=Colors.NEON_GREEN, relief='flat',
             padx=5, pady=5, wrap=tk.NONE
         )
         self.text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
