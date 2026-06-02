@@ -1,6 +1,8 @@
 import random
 import tkinter as tk
 
+from colros import Colors
+
 class TerminalComponent:
     def __init__(self, frame, root):
         self.frame = frame
@@ -105,14 +107,14 @@ class TerminalComponent:
 
         self.title = tk.Label(
             self.frame, text="> SYSTEM TERMINAL [ROOT ACCESS]",
-            font=('Courier', 12, 'bold'), fg='#00FF00', bg='black', anchor='w', padx=10
+            font=('Courier', 12, 'bold'), fg=Colors.NEON_GREEN, bg='black', anchor='w', padx=10
         )
         self.title.pack(fill=tk.X, pady=(5, 0))
 
         # Text Widget
         self.text = tk.Text(
-            self.frame, bg='black', fg='#00FF00', font=('Courier', 10),
-            height=12, insertbackground='#00FF00', relief='flat'
+            self.frame, bg='black', fg=Colors.NEON_GREEN, font=('Courier', 10),
+            height=12, insertbackground=Colors.NEON_GREEN, relief='flat'
         )
         self.text.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
         self.text.config(state=tk.DISABLED)

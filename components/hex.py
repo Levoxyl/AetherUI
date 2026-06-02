@@ -2,6 +2,8 @@ import random
 import time
 import tkinter as tk
 
+from colors import Colors
+
 class HexComponent:
     def __init__(self, frame, root):
         self.frame = frame
@@ -14,11 +16,11 @@ class HexComponent:
             self.frame, 
             text="> SYSTEM HEX DUMP",
             font=('Courier', 12, 'bold'),
-            fg='#00FF00', bg='black', anchor='w', padx=10
+            fg=Colors.NEON_GREEN, bg='black', anchor='w', padx=10
         )
         self.title.pack(fill=tk.X, pady=(5, 0))
         
-        self.text = tk.Text(self.frame, font=('Courier', 10), fg='#00FF00', bg='black', bd=0, highlightthickness=0)
+        self.text = tk.Text(self.frame, font=('Courier', 10), fg=Colors.NEON_GREEN, bg='black', bd=0, highlightthickness=0)
         self.text.pack(fill=tk.BOTH, expand=True)
         self.text.config(state=tk.DISABLED)
         
