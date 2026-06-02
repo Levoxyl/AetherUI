@@ -1,44 +1,58 @@
 import tkinter as tk
 from visualization import VisualizationComponent
 from binary import BinaryComponent
-from hex  import HexComponent
+from hex import HexComponent
 from terminal import TerminalComponent
 
-class defaultInterface:
-    def __init__(self, root):
+class DefaultTheme:
+    def __init__(self, root, screen_w, screen_h):
         self.root = root
-        self.root.title("CYBER SYSTEMS MONITOR v4.5.0")
-        self.root.configure(bg='black')
-        self.root.attributes('-fullscreen', True)
+        self.screen_w = screen_w
+        self.screen_h = screen_h
         
-        # Set up the main frame with green border
+        # --- Root Containers ---
         self.main_frame = tk.Frame(root, bg='#00FF00', bd=5, relief='solid')
         self.main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
-        # Create the interior frame for content
         self.content_frame = tk.Frame(self.main_frame, bg='black')
         self.content_frame.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
         
-        # Create the top section (visualization + binary)
-        self.top_frame = tk.Frame(self.content_frame, bg='black')
-        self.top_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.content_frame.columnconfigure(0, weight=3) # Left
+        self.content_frame.columnconfigure(1, weight=1) # Right
+        self.content_frame.rowconfigure(0, weight=2)    # Up
+        self.content_frame.rowconfigure(1, weight=1)    # Low
         
-        # Left panel for network visualization & status dashboard
-        self.viz_frame = tk.Frame(self.top_frame, bg='black', bd=2, relief='solid', highlightbackground="#00FF00", highlightthickness=1)
-        self.viz_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5), pady=5)
+        # --- Panel Init ---
+        # L.Panel (Network Map & Dashboard)
+        self.viz_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
+                                  highlightbackground="#00FF00", highlightthickness=1)
+        self.viz_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
-        # Right panel for binary stream
-        self.binary_frame = tk.Frame(self.top_frame, bg='black', bd=2, relief='solid', highlightbackground="#00FF00", highlightthickness=1)
-        self.binary_frame.pack(side=tk.RIGHT, fill=tk.Y, padx=(5, 0), pady=5, ipadx=2)
+        # R.Panel (Binary Data Stream)
+        self.binary_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
+                                    highlightbackground="#00FF00", highlightthickness=1)
+        self.binary_frame.grid(row=0, column=1, rowspan=2, sticky="nsew", padx=5, pady=5)
         
-        # Instantiate Components (They handle their own contents completely!)
+        # Bot.L Panel (Terminal /Hex View Setup)
+        self.bottom_left_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid',
+                                         highlightbackground="#00FF00", highlightthickness=1)
+        self.bottom_left_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+        
+        # Configure sub-grid for bot area to distribute Terminal & Hex evenly side-by-side
+        self.bottom_left_frame.columnconfigure(0, weight=1)
+        self.bottom_left_frame.columnconfigure(1, weight=1)
+        self.bottom_left_frame.rowconfigure(0, weight=1)
+        
+        self.term_sub_frame = tk.Frame(self.bottom_left_frame, bg='black')
+        self.term_sub_frame.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
+        
+        self.hex_sub_frame = tk.Frame(self.bottom_left_frame, bg='black')
+        self.hex_sub_frame.grid(row=0, column=1, sticky="nsew", padx=2, pady=2)
+
+        # Initialize components within their respective frames
         self.viz = VisualizationComponent(self.viz_frame, self.root)
         self.binary = BinaryComponent(self.binary_frame, self.root)
+        self.terminal = TerminalComponent(self.term_sub_frame, self.root)
+        self.hex = HexComponent(self.hex_sub_frame, self.root)
         
-        # Bind ESC key to exit
         root.bind('<Escape>', lambda e: root.destroy())
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = HackerInterface(root)
-    root.mainloop()
