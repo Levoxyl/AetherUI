@@ -1,24 +1,41 @@
 import tkinter as tk
 import random
 
-def update_binary(self):
-        self.binary_text.config(state=tk.NORMAL)
-        self.binary_text.insert('1.0', self.generate_binary_line() + '\n')
+class BinaryComponent:
+    def __init__(self, frame, root):
+        self.frame = frame
+        self.root = root
+
+        self.text = tk.Text(
+            self.frame, bg='black', fg='#00FF00',
+            font=('Courier New', 14), width=12, height=20,
+            insertbackground='#00FF00', relief='flat',
+            padx=5, pady=5, wrap=tk.NONE
+        )
+        self.text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.text.config(state=tk.DISABLED)
         
-        # Remove last ln if too many
-        line_count = int(self.binary_text.index('end-1c').split('.')[0])
+        self.update()
+
+    def generate_line(self):
+        return ''.join(random.choice('01') for _ in range(12))
+
+    def update(self):
+        self.text.config(state=tk.NORMAL)
+        self.text.insert('1.0', self.generate_line() + '\n')
+
+        line_count = int(self.text.index('end-1c').split('.')[0])
         if line_count > 20:
-            self.binary_text.delete('20.0', 'end')
+            self.text.delete('20.0', 'end')
         
-        # Occasionally make a line red
+        # red flash
         if random.random() < 0.05:
             line_num = random.randint(1, min(20, line_count))
-            self.binary_text.tag_add('error', f'{line_num}.0', f'{line_num}.end')
-            self.binary_text.tag_config('error', foreground='red')
-            self.root.after(500, lambda: self.binary_text.tag_remove('error', f'{line_num}.0', f'{line_num}.end'))
+            tag_name = f'err_{random.randint(1,1000)}'
+            self.text.tag_add(tag_name, f'{line_num}.0', f'{line_num}.end')
+            self.text.tag_config(tag_name, foreground='red')
+            # Schedule tag removal
+            self.root.after(500, lambda: self.text.tag_delete(tag_name))
         
-        self.binary_text.config(state=tk.DISABLED)
-        self.root.after(150, self.update_binary)
-
-        def generate_binary_line(self):
-    return ''.join(random.choice('01') for _ in range(12))
+        self.text.config(state=tk.DISABLED)
+        self.root.after(150, self.update)
