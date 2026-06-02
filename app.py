@@ -30,38 +30,10 @@ class HackerInterface:
         # Left panel for network visualization
         self.viz_frame = tk.Frame(self.top_frame, bg='black', bd=2, relief='solid', highlightbackground="#00FF00", highlightthickness=1)
         self.viz_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5), pady=5)
-        
-        # Title for visualization
-        self.viz_title = tk.Label(
-            self.viz_frame, 
-            text="> GLOBAL NETWORK THREAT MAP",
-            font=('Courier', 12, 'bold'),
-            fg='#00FF00',
-            bg='black',
-            anchor='w',
-            padx=10
-        )
-        self.viz_title.pack(fill=tk.X, pady=(5, 0))
-        
-        # Canvas for visualization
-        self.viz_canvas = tk.Canvas(self.viz_frame, bg='black', highlightthickness=0)
-        self.viz_canvas.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-        
+
         # Right panel for binary (tighter)
         self.binary_frame = tk.Frame(self.top_frame, bg='black', bd=2, relief='solid', highlightbackground="#00FF00", highlightthickness=1)
         self.binary_frame.pack(side=tk.RIGHT, fill=tk.Y, padx=(5, 0), pady=5, ipadx=2)
-        
-        # Binary title
-        self.binary_title = tk.Label(
-            self.binary_frame, 
-            text="> ENCRYPTED DATA STREAM",
-            font=('Courier', 10, 'bold'),
-            fg='#00FF00',
-            bg='black',
-            anchor='w',
-            padx=5
-        )
-        self.binary_title.pack(fill=tk.X, pady=(5, 0))
         
         # Binary display with larger font (12 symbols per line)
         self.binary_text = tk.Text(
@@ -295,93 +267,6 @@ class HackerInterface:
         
         # Bind ESC key to exit
         root.bind('<Escape>', lambda e: root.destroy())
-    
-    def update_terminal(self):
-        self.terminal_text.config(state=tk.NORMAL)
-        
-        if self.sequence_delay > 0:
-            self.sequence_delay -= 1
-        else:
-            # Add next line of current sequence
-            sequence = self.command_sequences[self.current_sequence]
-            line = sequence[self.current_step]
-            
-            # Add prompt for new commands
-            if self.current_step == 0:
-                prefixes = [
-                    "[root@kali] # ",
-                    "user@debian $ ",
-                    "admin@server > ",
-                    "C:\\> ",
-                    "PS C:\\Hacking> "
-                ]
-                prompt = random.choice(prefixes)
-                self.terminal_text.insert(tk.END, prompt + line + '\n')
-            else:
-                self.terminal_text.insert(tk.END, line + '\n')
-            
-            # Move to next step or next sequence
-            self.current_step += 1
-            if self.current_step >= len(sequence):
-                self.current_step = 0
-                self.current_sequence = (self.current_sequence + 1) % len(self.command_sequences)
-                self.sequence_delay = 3  # Pause before next command sequence
-            
-            # Scroll to the end
-            self.terminal_text.see(tk.END)
-            
-            # Remove lines if too many
-            line_count = int(self.terminal_text.index('end-1c').split('.')[0])
-            if line_count > 30:
-                self.terminal_text.delete('1.0', f'{line_count-25}.0')
-        
-        self.terminal_text.config(state=tk.DISABLED)
-        self.root.after(300, self.update_terminal)
-    
-    def draw_visualization(self):
-        # Draw a network visualization
-        w = self.viz_canvas.winfo_width() or 800
-        h = self.viz_canvas.winfo_height() or 500
-        if w < 10 or h < 10:  # Canvas not ready
-            self.root.after(100, self.draw_visualization)
-            return
-        
-        # Clear previous drawings
-        self.viz_canvas.delete("viz")
-        
-        # Draw radar background
-        center_x, center_y = w * 0.35, h * 0.5
-        radius = min(w, h) * 0.35
-        
-        # Draw concentric circles
-        for i in range(1, 5):
-            r = radius * i / 4
-            self.viz_canvas.create_oval(
-                center_x - r, center_y - r,
-                center_x + r, center_y + r,
-                outline='#003300',
-                width=1,
-                tags=("viz", "radar")
-            )
-        
-        # Draw crosshairs
-        self.viz_canvas.create_line(center_x, center_y - radius, center_x, center_y + radius, 
-                                   fill='#003300', width=1, tags=("viz", "radar"))
-        self.viz_canvas.create_line(center_x - radius, center_y, center_x + radius, center_y, 
-                                   fill='#003300', width=1, tags=("viz", "radar"))
-        
-        # Draw radar sweep
-        rad = math.radians(self.radar_angle)
-        x = center_x + radius * math.cos(rad)
-        y = center_y + radius * math.sin(rad)
-        self.viz_canvas.create_line(center_x, center_y, x, y, fill='#00FF00', width=2, tags=("viz", "sweep"))
-    
-    def update_visualization(self):
-        w = self.viz_canvas.winfo_width() or 800
-        h = self.viz_canvas.winfo_height() or 500
-        if w < 10 or h < 10:  # Canvas not ready
-            self.root.after(100, self.update_visualization)
-            return
         
         # Clear previous sweep
         self.viz_canvas.delete("sweep")
