@@ -52,9 +52,13 @@ class VisualizationComponent:
         y = center_y + radius * math.sin(rad)
         self.canvas.create_line(center_x, center_y, x, y, fill='#00FF00', width=2, tags=("viz", "sweep"))
 
-    def update(self):
-        w = self.canvas.winfo_width() or 800
-        h = self.canvas.winfo_height() or 500
-        if w < 10 or h < 10:  # Canvas not ready
+   def update(self):
+        w = self.canvas.winfo_width()
+        h = self.canvas.winfo_height()
+        
+        if w < 10 or h < 10:
             self.frame.after(100, self.update)
             return
+        self.radar_angle = (self.radar_angle + 5) % 360 
+        self.draw()
+        self.frame.after(50, self.update)
