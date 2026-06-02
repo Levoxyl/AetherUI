@@ -7,7 +7,3 @@ YELLOW = "#FFFF00"
 
 # Reds
 RED = "#FF0000"
-
-# Basics
-WHITE = "#FFFFFF"
-BLACK = "#000000"
