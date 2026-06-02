@@ -8,7 +8,7 @@ class TerminalComponent:
         self.current_sequence = 0
         self.current_step = 0
         self.sequence_delay = 0
-self.command_sequences = [
+        self.command_sequences = [
             [
                 "nmap -sS -T4 -A -v 192.168.1.0/24",
                 "Starting Nmap 7.92 ( https://nmap.org )",
