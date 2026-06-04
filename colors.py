@@ -5,3 +5,4 @@ class Colors:
     NEON_GREEN = "#00FF00"
 
     YELLOW = "#FFFF00"
+    RED = "#FF0000"
