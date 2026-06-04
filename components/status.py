@@ -7,7 +7,6 @@ class StatusComponent:
         self.frame = frame
         self.root = root
 
-        # Header Label
         self.title = tk.Label(
             self.frame, text="> SYSTEM STATUS DIAGNOSTICS",
             font=('Courier', 12, 'bold'), fg='#00FF00', bg='black', anchor='w', padx=10
@@ -26,10 +25,10 @@ class StatusComponent:
             "VOLTAGE", "CPU USAGE", "MEMORY USAGE", "NETWORK"
         ]
 
-        self.update_status_metrics()
+        self.update()
         self.blink_warnings()
 
-    def draw_base_ui(self, w, h):
+    def draw(self, w, h):
         self.canvas.delete("status_base")
         y_offsets = [40, 70, 100, 130, 160, 190, 220, 250]
         
@@ -58,15 +57,15 @@ class StatusComponent:
             20, h - 20, text="", anchor="sw", 
             fill="#00FF00", font=('Courier', 9), tags=("timestamp",))
 
-    def update_status_metrics(self):
+    def update(self):
         w = self.canvas.winfo_width()
         h = self.canvas.winfo_height()
         if w < 10:
-            self.root.after(500, self.update_status_metrics)
+            self.root.after(500, self.update)
             return
 
         if not self.canvas.find_withtag("status_base"):
-            self.draw_base_ui(w, h)
+            self.draw(w, h)
 
         for i in range(8):
             change = random.uniform(-0.5, 0.5)
@@ -93,7 +92,7 @@ class StatusComponent:
         if ts_items:
             self.canvas.itemconfig(ts_items[0], text=f"LOG REFRESH: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
             
-        self.root.after(500, self.update_status_metrics)
+        self.root.after(500, self.update)
 
     def blink_warnings(self):
         for i in range(3):
