@@ -24,8 +24,8 @@ class DefaultTheme:
         self.content_frame = tk.Frame(self.main_frame, bg='black')
         self.content_frame.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
         
-        self.content_frame.columnconfigure(0, weight=3) # Left
-        self.content_frame.columnconfigure(1, weight=1) # Right
+        self.content_frame.columnconfigure(0, weight=1) # Left
+        # self.content_frame.columnconfigure(1, weight=1) # Right
         self.content_frame.rowconfigure(0, weight=2)    # Up
         self.content_frame.rowconfigure(1, weight=1)    # Low
         
