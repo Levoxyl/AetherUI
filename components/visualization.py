@@ -37,9 +37,9 @@ class VisualizationComponent:
                 "last_seen": time.time() - random.randint(1, 20)
             })
 
-        self.update_radar_and_nodes()
+        self.update()
             
-    def draw_base_radar(self, center_x, center_y, radius):
+    def draw(self, center_x, center_y, radius):
         self.canvas.delete("radar_base")
         
         # Static bg Rings & Crosshairs
@@ -52,12 +52,12 @@ class VisualizationComponent:
         self.canvas.create_line(center_x, center_y - radius, center_x, center_y + radius, fill='#003300', width=1, tags=("radar_base",))
         self.canvas.create_line(center_x - radius, center_y, center_x + radius, center_y, fill='#003300', width=1, tags=("radar_base",))
 
-    def update_radar_and_nodes(self):
+    def update(self):
         w = self.canvas.winfo_width()
         h = self.canvas.winfo_height()
         
         if w < 10 or h < 10:
-            self.root.after(100, self.update_radar_and_nodes)
+            self.root.after(100, self.update)
             return
             
         center_x, center_y = w * 0.5, h * 0.5
@@ -65,7 +65,7 @@ class VisualizationComponent:
         
         # static background coordinates update if the frame resizes
         if not self.canvas.find_withtag("radar_base"):
-            self.draw_base_radar(center_x, center_y, radius)
+            self.draw(center_x, center_y, radius)
 
         # Clear active foreground objects
         self.canvas.delete("sweep")
@@ -100,4 +100,4 @@ class VisualizationComponent:
             n = random.choice(self.nodes)
             n["status"] = random.choice(["secure", "warning", "critical"])
             
-        self.root.after(50, self.update_radar_and_nodes)
+        self.root.after(50, self.update)
