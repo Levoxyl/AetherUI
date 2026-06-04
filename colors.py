@@ -1,9 +1,7 @@
-# Greens
-FILL_GREEN ="#003300"
-NEON_GREEN = "#00FF00"
+class Colors:
 
-# Yellows
-YELLOW = "#FFFF00"
+    #Greens
+    FILL_GREEN = "#003300"
+    NEON_GREEN = "#00FF00"
 
-# Reds
-RED = "#FF0000"
+    YELLOW = "#FFFF00"
