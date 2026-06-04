@@ -30,25 +30,25 @@ class DefaultTheme:
         self.content_frame.rowconfigure(1, weight=1)    # Low
         
         # --- Panel Init ---
-        # L.Panel (Network Map & Dashboard)
+
+        # Top Panel (Network Map & Dashboard)
         self.viz_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
                                   highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
         self.viz_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
-        # R.Panel (Binary Data Stream)
-        self.binary_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
-                                    highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
-        self.binary_frame.grid(row=0, column=1, rowspan=2, sticky="nsew", padx=5, pady=5)
-        
-        # Bot.L Panel (Terminal /Hex View Setup)
+        # Bottom Panel (Terminal/Bin /Hex View Setup)
         self.bottom_left_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid',
                                          highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
         self.bottom_left_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
         
-        # Configure sub-grid for bot area to distribute Terminal & Hex evenly side-by-side
+        # Lower window
         self.bottom_left_frame.columnconfigure(0, weight=1)
         self.bottom_left_frame.columnconfigure(1, weight=1)
         self.bottom_left_frame.rowconfigure(0, weight=1)
+        self.bottom_left_frame.columnconfigure(2, weight=1)
+
+        self.binary_sub_frame = tk.Frame(self.bottom_left_frame, bg='black')
+        self.binary_sub_frame.grid(row=0, column=2, sticky="nsew", padx=2, pady=2)
         
         self.term_sub_frame = tk.Frame(self.bottom_left_frame, bg='black')
         self.term_sub_frame.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
@@ -58,7 +58,7 @@ class DefaultTheme:
 
         # Initialize components within their respective frames
         self.viz = VisualizationComponent(self.viz_frame, self.root)
-        self.binary = BinaryComponent(self.binary_frame, self.root)
+        self.binary = BinaryComponent(self.binary_sub_frame, self.root)
         self.terminal = TerminalComponent(self.term_sub_frame, self.root)
         self.hex = HexComponent(self.hex_sub_frame, self.root)
         
