@@ -1,7 +1,7 @@
 import random
 import tkinter as tk
 
-from colros import Colors
+from colors import Colors
 
 class TerminalComponent:
     def __init__(self, frame, root):

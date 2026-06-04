@@ -37,7 +37,7 @@ class VisualizationComponent:
                 "last_seen": time.time() - random.randint(1, 20)
             })
 
-        self.update()
+        self.updateSweep()
             
     def draw(self, center_x, center_y, radius):
         self.canvas.delete("radar_base")
@@ -52,12 +52,12 @@ class VisualizationComponent:
         self.canvas.create_line(center_x, center_y - radius, center_x, center_y + radius, fill='#003300', width=1, tags=("radar_base",))
         self.canvas.create_line(center_x - radius, center_y, center_x + radius, center_y, fill='#003300', width=1, tags=("radar_base",))
 
-    def update(self):
+    def updateSweep(self):
         w = self.canvas.winfo_width()
         h = self.canvas.winfo_height()
         
         if w < 10 or h < 10:
-            self.root.after(100, self.update)
+            self.root.after(100, self.updateSweep)
             return
             
         center_x, center_y = w * 0.5, h * 0.5
@@ -99,4 +99,4 @@ class VisualizationComponent:
             n = random.choice(self.nodes)
             n["status"] = random.choice(["secure", "warning", "critical"])
             
-        self.root.after(50, self.update)
+        self.root.after(50, self.updateSweep)
