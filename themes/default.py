@@ -1,7 +1,10 @@
 import tkinter as tk
 import os 
 import sys
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'components'))
+
+from colors import Colors
 
 from visualization import VisualizationComponent
 from binary import BinaryComponent
@@ -15,7 +18,7 @@ class DefaultTheme:
         self.screen_h = screen_h
         
         # --- Root Containers ---
-        self.main_frame = tk.Frame(root, bg='#00FF00', bd=5, relief='solid')
+        self.main_frame = tk.Frame(root, bg=Colors.NEON_GREEN, bd=5, relief='solid')
         self.main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
         self.content_frame = tk.Frame(self.main_frame, bg='black')
@@ -29,17 +32,17 @@ class DefaultTheme:
         # --- Panel Init ---
         # L.Panel (Network Map & Dashboard)
         self.viz_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
-                                  highlightbackground="#00FF00", highlightthickness=1)
+                                  highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
         self.viz_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
         # R.Panel (Binary Data Stream)
         self.binary_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
-                                    highlightbackground="#00FF00", highlightthickness=1)
+                                    highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
         self.binary_frame.grid(row=0, column=1, rowspan=2, sticky="nsew", padx=5, pady=5)
         
         # Bot.L Panel (Terminal /Hex View Setup)
         self.bottom_left_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid',
-                                         highlightbackground="#00FF00", highlightthickness=1)
+                                         highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
         self.bottom_left_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
         
         # Configure sub-grid for bot area to distribute Terminal & Hex evenly side-by-side

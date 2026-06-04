@@ -3,6 +3,9 @@ import tkinter as tk
 import random
 import time
 
+from datetime import datetime
+from colors import Colors
+
 class VisualizationComponent:
     def __init__(self, frame, root):
         self.frame = frame
@@ -14,7 +17,7 @@ class VisualizationComponent:
             self.frame, 
             text="> GLOBAL NETWORK THREAT MAP",
             font=('Courier', 12, 'bold'),
-            fg='#00FF00', bg='black', anchor='w', padx=10
+            fg=Colors.NEON_GREEN, bg='black', anchor='w', padx=10
         )
         self.title.pack(fill=tk.X, pady=(5, 0))
 
@@ -86,7 +89,7 @@ class VisualizationComponent:
             if math.sqrt((nx - center_x)**2 + (ny - center_y)**2) > radius * 0.95:
                 continue
                 
-            color = "#00FF00" if node["status"] == "secure" else "#FFFF00" if node["status"] == "warning" else "#FF0000"
+            color = Colors.NEON_GREEN if node["status"] == "secure" else Colors.YELLOW if node["status"] == "warning" else Colors.RED
             size = 5 + node["z"] * 5
             
             self.canvas.create_oval(nx - size, ny - size, nx + size, ny + size, fill=color, outline=color, tags=("node",))
