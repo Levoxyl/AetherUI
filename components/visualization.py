@@ -27,7 +27,7 @@ class VisualizationComponent:
 
         # Isolated State Nodes config
         self.nodes = []
-        for _ in range(12):
+        for _ in range(6):
             self.nodes.append({
                 "x": random.uniform(-0.9, 0.9),
                 "y": random.uniform(-0.9, 0.9),
@@ -64,8 +64,7 @@ class VisualizationComponent:
         radius = min(w, h) * 0.45
         
         # static background coordinates update if the frame resizes
-        if not self.canvas.find_withtag("radar_base"):
-            self.draw(center_x, center_y, radius)
+        self.draw(center_x, center_y, radius)
 
         # Clear active foreground objects
         self.canvas.delete("sweep")
