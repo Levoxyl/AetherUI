@@ -10,9 +10,9 @@ class BinaryComponent:
 
         self.text = tk.Text(
             self.frame, bg='black', fg=Colors.NEON_GREEN,
-            font=('Courier New', 14), width=12, height=20,
+            font=('Courier New', 12), width=32, height=32,
             insertbackground=Colors.NEON_GREEN, relief='flat',
-            padx=5, pady=5, wrap=tk.NONE
+            padx=0, pady=0, wrap=tk.NONE
         )
         self.text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.text.config(state=tk.DISABLED)
