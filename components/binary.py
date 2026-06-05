@@ -50,5 +50,6 @@ class BinaryComponent:
             # Schedule tag removal
             self.root.after(500, lambda: self.text.tag_delete(tag_name))
         
+        self.text.see(tk.END)
         self.text.config(state=tk.DISABLED)
         self.root.after(150, self.update)
