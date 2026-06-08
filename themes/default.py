@@ -24,6 +24,11 @@ class DefaultTheme:
         self.content_frame = tk.Frame(self.main_frame, bg='black')
         self.content_frame.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
         
+
+        # Total Weight = 2 (Row 0) + 1 (Row 1) = 3
+        # Top row 2/3 = 66%
+        # Bot row 1/3 = 33%
+
         self.content_frame.columnconfigure(0, weight=1) # Left
         # self.content_frame.columnconfigure(1, weight=1) # Right
         self.content_frame.rowconfigure(0, weight=2)    # Up
@@ -56,7 +61,6 @@ class DefaultTheme:
         self.hex_sub_frame = tk.Frame(self.bottom_left_frame, bg='black')
         self.hex_sub_frame.grid(row=0, column=1, sticky="nsew", padx=2, pady=2)
 
-        # Initialize components within their respective frames
         self.viz = VisualizationComponent(self.viz_frame, self.root)
         self.binary = BinaryComponent(self.binary_sub_frame, self.root)
         self.terminal = TerminalComponent(self.term_sub_frame, self.root)
