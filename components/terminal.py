@@ -101,9 +101,6 @@ class TerminalComponent:
                 "[+] Saved to /usr/share/responder/logs/SMB-NTLMv2-SSP-10.0.0.15.txt"
             ]
         ]
-        self.current_sequence = 0
-        self.current_step = 0
-        self.sequence_delay = 0
 
         self.title = tk.Label(
             self.frame, text="> SYSTEM TERMINAL [ROOT ACCESS]",

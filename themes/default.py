@@ -17,7 +17,7 @@ class DefaultTheme:
         self.screen_w = screen_w
         self.screen_h = screen_h
         
-        # --- Root Containers ---
+        # =========   R O O T    C O N T A I N E R S   =========
         self.main_frame = tk.Frame(root, bg=Colors.NEON_GREEN, bd=5, relief='solid')
         self.main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
@@ -33,21 +33,20 @@ class DefaultTheme:
         self.content_frame.rowconfigure(0, weight=2)    # Up
         self.content_frame.rowconfigure(1, weight=1)    # Low
         
-       # --- Top Panel (Network Map & Dashboard) ---
+       # ** Top Panel
         self.viz_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
                                   highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
                                   )
         self.viz_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
         self.viz_frame.grid_propagate(False)
 
-        # --- Bottom Panel (Terminal / Bin / Hex View Setup) ---
+        # ** Bottom Panel
         self.bottom_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid',
                                      highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
                                     )
         self.bottom_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
         self.bottom_frame.grid_propagate(False)
         
-        # Lower window
         self.bottom_frame.columnconfigure(0, weight=1, uniform="lower_deck")
         self.bottom_frame.columnconfigure(1, weight=1, uniform="lower_deck")
         self.bottom_frame.columnconfigure(2, weight=1, uniform="lower_deck")
@@ -68,7 +67,7 @@ class DefaultTheme:
         self.terminal = TerminalComponent(self.term_sub_frame, self.root)
         self.hex = HexComponent(self.hex_sub_frame, self.root)
 
-        # --- Design ---
+        # =========  D E S I G N   =========
         
         hex_title_config = {
             "font": ('Courier New', 12, 'bold'),
