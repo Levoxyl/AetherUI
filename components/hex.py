@@ -45,18 +45,13 @@ class HexComponent:
         self.text.config(state=tk.NORMAL)
 
         pixel_width = self.text.winfo_width()
-        
         if pixel_width > 50:
             target_char_width = pixel_width // 34
-            
-            # Map char w
             target_font_size = -int(target_char_width * 1.6) 
             
-            # Clamp constraints
             if target_font_size < -16: target_font_size = -16
             if target_font_size > -9:  target_font_size = -9
             
-            # Update the mutable font object in real-time
             self.custom_font.config(size=target_font_size)
 
         new_line = self.generate_line()
@@ -65,17 +60,12 @@ class HexComponent:
             
         self.text.insert('1.0', (new_line[1:] if new_line.startswith("!") else new_line) + '\n')
 
-        # Read
-        current_height = self.text.winfo_height()
-        bottom_index = self.text.index(f"@0,{current_height}")
-        max_visible_lines = int(bottom_index.split('.')[0])
+        total_lines = int(self.text.index('end-1c').split('.')[0])
 
-        if current_height > 10 and max_visible_lines > 15:
-            self.text.delete(f"{max_visible_lines + 1}.0", 'end')
+        if total_lines > 25:
+            self.text.delete('26.0', 'end')
 
-        # Warning tag management
-        line_count = int(self.text.index('end-1c').split('.')[0])
-        if new_line.startswith("!") and line_count > 0:
+        if new_line.startswith("!") and total_lines > 0:
             tag_id = f"warn_{time.time()}"
             self.text.tag_add(tag_id, '1.0', '1.end')
             self.text.tag_config(tag_id, foreground="red")

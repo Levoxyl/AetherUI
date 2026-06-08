@@ -34,17 +34,19 @@ class DefaultTheme:
         self.content_frame.rowconfigure(0, weight=2)    # Up
         self.content_frame.rowconfigure(1, weight=1)    # Low
         
-        # --- Panel Init ---
-
-        # Top Panel (Network Map & Dashboard)
+       # --- Top Panel (Network Map & Dashboard) ---
         self.viz_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
-                                  highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
+                                  highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
+                                  )
         self.viz_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+        self.viz_frame.grid_propagate(False)
 
-        # Bottom Panel (Terminal/Bin /Hex View Setup)
+        # --- Bottom Panel (Terminal / Bin / Hex View Setup) ---
         self.bottom_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid',
-                                         highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
+                                     highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
+                                    )
         self.bottom_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+        self.bottom_frame.grid_propagate(False)
         
         # Lower window
         self.bottom_frame.columnconfigure(0, weight=1)
