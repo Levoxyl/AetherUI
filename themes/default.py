@@ -49,9 +49,9 @@ class DefaultTheme:
         self.bottom_frame.grid_propagate(False)
         
         # Lower window
-        self.bottom_frame.columnconfigure(0, weight=1)
-        self.bottom_frame.columnconfigure(1, weight=1)
-        self.bottom_frame.columnconfigure(2, weight=1)
+        self.bottom_frame.columnconfigure(0, weight=1, uniform="lower_deck")
+        self.bottom_frame.columnconfigure(1, weight=1, uniform="lower_deck")
+        self.bottom_frame.columnconfigure(2, weight=1, uniform="lower_deck")
         self.bottom_frame.rowconfigure(0, weight=1)
 
 
