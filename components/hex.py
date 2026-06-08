@@ -3,25 +3,29 @@ import time
 import tkinter as tk
 from tkinter import font as tkfont
 
-from colors import Colors
-
 class HexComponent:
-    def __init__(self, frame, root):
+    def __init__(self, frame, root, title_text="", title_style=None, text_style=None):
         self.frame = frame
         self.root = root
         
-        self.title = tk.Label(
-            self.frame, 
-            text="> SYSTEM HEX DUMP",
-            font=('Courier New', 12, 'bold'),
-            fg=Colors.NEON_GREEN, bg='black', anchor='w', padx=10
-        )
+        if title_style is None: title_style = {}
+        if text_style is None:  text_style = {}
+        
+        self.title = tk.Label(self.frame, text=title_text, **title_style)
         self.title.pack(fill=tk.X, pady=(5, 0))
-        self.custom_font = tkfont.Font(family='Courier New', size=12)
+        
+        chosen_family = text_style.pop('font_family', 'Courier New')
+        self.custom_font = tkfont.Font(family=chosen_family, size=12)
 
         self.text = tk.Text(
-            self.frame, font=self.custom_font, fg=Colors.NEON_GREEN, bg='black', 
-            bd=0, highlightthickness=0, padx=0, pady=0, wrap=tk.NONE
+            self.frame, 
+            font=self.custom_font,
+            bd=0, 
+            highlightthickness=0, 
+            padx=0, 
+            pady=0, 
+            wrap=tk.NONE,
+            **text_style
         )
         self.text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.text.config(state=tk.DISABLED)

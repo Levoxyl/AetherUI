@@ -30,7 +30,6 @@ class DefaultTheme:
         # Bot row 1/3 = 33%
 
         self.content_frame.columnconfigure(0, weight=1) # Left
-        # self.content_frame.columnconfigure(1, weight=1) # Right
         self.content_frame.rowconfigure(0, weight=2)    # Up
         self.content_frame.rowconfigure(1, weight=1)    # Low
         
@@ -68,5 +67,30 @@ class DefaultTheme:
         self.binary = BinaryComponent(self.binary_sub_frame, self.root)
         self.terminal = TerminalComponent(self.term_sub_frame, self.root)
         self.hex = HexComponent(self.hex_sub_frame, self.root)
+
+        # --- Design ---
+        
+        hex_title_config = {
+            "font": ('Courier New', 12, 'bold'),
+            "fg": Colors.NEON_GREEN,
+            "bg": 'black',
+            "anchor": 'w',
+            "padx": 10
+        }
+
+        hex_text_config = {
+            "font_family": "Courier New",
+            "fg": Colors.NEON_GREEN,
+            "bg": "black",
+            "insertbackground": Colors.NEON_GREEN
+        }
+        
+        self.hex = HexComponent(
+            self.hex_sub_frame, 
+            self.root, 
+            title_text="> SYSTEM HEX DUMP", 
+            title_style=hex_title_config,
+            text_style=hex_text_config
+        ) 
         
         root.bind('<Escape>', lambda e: root.destroy())
