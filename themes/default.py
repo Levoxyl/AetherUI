@@ -63,7 +63,6 @@ class DefaultTheme:
         self.binary_sub_frame.grid(row=0, column=2, sticky="nsew", padx=2, pady=2)
 
         self.viz = VisualizationComponent(self.viz_frame, self.root)
-        self.binary = BinaryComponent(self.binary_sub_frame, self.root)
 
         # =========  D E S I G N   =========
 
@@ -113,5 +112,27 @@ class DefaultTheme:
             text_style=terminal_text_config
         )
 
-        
+        binary_title_config = {
+            "font": ('Courier New', 12, 'bold'),
+            "fg": Colors.NEON_GREEN,
+            "bg": 'black',
+            "anchor": 'w',
+            "padx": 10
+        }
+
+        binary_text_config = {
+            "font_family": "Courier New",
+            "fg": Colors.NEON_GREEN,
+            "bg": "black",
+            "insertbackground": Colors.NEON_GREEN
+        }
+
+        self.binary = BinaryComponent(
+            self.binary_sub_frame,
+            self.root,
+            title_text="> BINARY STREAM",
+            title_style=binary_title_config,
+            text_style=binary_text_config
+        )
+
         root.bind('<Escape>', lambda e: root.destroy())

@@ -5,18 +5,38 @@ from tkinter import font as tkfont
 from colors import Colors
 
 class BinaryComponent:
-    def __init__(self, frame, root):
+    def __init__(self, frame, root, title_text="", title_style=None, text_style=None):
         self.frame = frame
         self.root = root
-        self.custom_font = tkfont.Font(family='Courier New', size=12)
+
+        if title_style is None: title_style = {}
+        if text_style is None:  text_style = {}
+
+        self.title = tk.Label(self.frame, text=title_text, **title_style)
+        self.title.pack(fill=tk.X, pady=(5, 0))
+        
+        chosen_family = text_style.pop('font_family', 'Courier New')
+        self.custom_font = tkfont.Font(family=chosen_family, size=12)
+
         self.text = tk.Text(
-            self.frame, bg='black', fg=Colors.NEON_GREEN,
-            font=('Courier New', 12),
-            insertbackground=Colors.NEON_GREEN, relief='flat',
-            padx=0, pady=0, wrap=tk.NONE
+            self.frame, 
+            font=self.custom_font,
+            bd=0, 
+            highlightthickness=0, 
+            padx=0, 
+            pady=0, 
+            wrap=tk.NONE,
+            **text_style
+
+            # self.frame, bg='black', fg=Colors.NEON_GREEN,
+            # font=('Courier New', 12),
+            # insertbackground=Colors.NEON_GREEN, relief='flat',
+            # padx=0, pady=0, wrap=tk.NONE
         )
+
         self.text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.text.config(state=tk.DISABLED)
+        
         
         self.update()
 
