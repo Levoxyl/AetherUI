@@ -30,8 +30,20 @@ class HexComponent:
         self.text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.text.config(state=tk.DISABLED)
         
+        self.text.bind('<Configure>', self.resize_font)
         self.update()
             
+    def resize_font(self, event=None):
+        pixel_width = self.text.winfo_width()
+        if pixel_width > 50:
+            target_char_width = pixel_width // 34
+            target_font_size = -int(target_char_width * 1.6) 
+            
+            if target_font_size < -16: target_font_size = -16
+            if target_font_size > -9:  target_font_size = -9
+            
+            self.custom_font.config(size=target_font_size)
+
     def generate_line(self):
         hex_val = ''.join(random.choice('0123456789ABCDEF') for _ in range(8))
         translations = [
@@ -48,30 +60,26 @@ class HexComponent:
     def update(self):
         self.text.config(state=tk.NORMAL)
 
-        pixel_width = self.text.winfo_width()
-        if pixel_width > 50:
-            target_char_width = pixel_width // 34
-            target_font_size = -int(target_char_width * 1.6) 
-            
-            if target_font_size < -16: target_font_size = -16
-            if target_font_size > -9:  target_font_size = -9
-            
-            self.custom_font.config(size=target_font_size)
-
         new_line = self.generate_line()
-        if random.random() < 0.1:
+        is_warning = random.random() < 0.1
+        if is_warning:
             new_line = "!" + new_line
             
-        self.text.insert('1.0', (new_line[1:] if new_line.startswith("!") else new_line) + '\n')
+        # Insert at END to see movement immediately
+        self.text.insert(tk.END, (new_line[1:] if new_line.startswith("!") else new_line) + '\n')
 
         total_lines = int(self.text.index('end-1c').split('.')[0])
-
+        
+        # Delete from the TOP (1.0 to 2.0) once buffer exceeds 25 lines
         if total_lines > 25:
-            self.text.delete('26.0', 'end')
+            self.text.delete('1.0', '2.0')
+            total_lines -= 1
 
-        if new_line.startswith("!") and total_lines > 0:
+        if is_warning and total_lines > 0:
             tag_id = f"warn_{time.time()}"
-            self.text.tag_add(tag_id, '1.0', '1.end')
+            
+            # Tag the last line added before the trailing newline character
+            self.text.tag_add(tag_id, f"{total_lines}.0", f"{total_lines}.end")
             self.text.tag_config(tag_id, foreground="red")
 
         self.text.see(tk.END)
