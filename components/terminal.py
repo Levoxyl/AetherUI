@@ -1,12 +1,13 @@
 import random
 import tkinter as tk
+from tkinter import font as tkfont
 
-from colors import Colors
 
 class TerminalComponent:
-    def __init__(self, frame, root):
+    def __init__(self, frame, root ,title_text="" ,title_style=None ,text_style=None):
         self.frame = frame
         self.root = root
+
         self.current_sequence = 0
         self.current_step = 0
         self.sequence_delay = 0
@@ -101,24 +102,28 @@ class TerminalComponent:
                 "[+] Saved to /usr/share/responder/logs/SMB-NTLMv2-SSP-10.0.0.15.txt"
             ]
         ]
-        self.current_sequence = 0
-        self.current_step = 0
-        self.sequence_delay = 0
 
-        self.title = tk.Label(
-            self.frame, text="> SYSTEM TERMINAL [ROOT ACCESS]",
-            font=('Courier', 12, 'bold'), fg=Colors.NEON_GREEN, bg='black', anchor='w', padx=10
-        )
+        if title_style is None: title_style = {}
+        if text_style is None:  text_style = {}
+        
+        self.title = tk.Label(self.frame, text=title_text, **title_style)
         self.title.pack(fill=tk.X, pady=(5, 0))
 
-        # Text Widget
+        chosen_family = text_style.pop('font_family', 'Courier New')
+        self.custom_font = tkfont.Font(family=chosen_family, size=12)
+        
         self.text = tk.Text(
-            self.frame, bg='black', fg=Colors.NEON_GREEN, font=('Courier', 10),
-            height=12, insertbackground=Colors.NEON_GREEN, relief='flat'
+            self.frame, 
+            font=self.custom_font,
+            bd=0, 
+            highlightthickness=0, 
+            padx=0, 
+            pady=0, 
+            wrap=tk.NONE,
+            **text_style
         )
-        self.text.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+        self.text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.text.config(state=tk.DISABLED)
-
         
         self.update()
 
