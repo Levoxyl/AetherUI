@@ -64,11 +64,9 @@ class DefaultTheme:
 
         self.viz = VisualizationComponent(self.viz_frame, self.root)
         self.binary = BinaryComponent(self.binary_sub_frame, self.root)
-        self.terminal = TerminalComponent(self.term_sub_frame, self.root)
-        self.hex = HexComponent(self.hex_sub_frame, self.root)
 
         # =========  D E S I G N   =========
-        
+
         hex_title_config = {
             "font": ('Courier New', 12, 'bold'),
             "fg": Colors.NEON_GREEN,
@@ -83,7 +81,6 @@ class DefaultTheme:
             "bg": "black",
             "insertbackground": Colors.NEON_GREEN
         }
-        
         self.hex = HexComponent(
             self.hex_sub_frame, 
             self.root, 
@@ -91,5 +88,30 @@ class DefaultTheme:
             title_style=hex_title_config,
             text_style=hex_text_config
         ) 
+
+
+        terminal_title_config = {
+            "font": ('Courier New', 12, 'bold'),
+            "fg": Colors.NEON_GREEN,
+            "bg": 'black',
+            "anchor": 'w',
+            "padx": 10
+        }
+
+        terminal_text_config = {
+            "font_family": "Courier New",
+            "fg": Colors.NEON_GREEN,
+            "bg": "black",
+            "insertbackground": Colors.NEON_GREEN
+        }
+
+        self.terminal = TerminalComponent(
+            self.term_sub_frame,
+            self.root,
+            title_text="> ACTIVE TERMINAL SESSION",
+            title_style=terminal_title_config,
+            text_style=terminal_text_config
+        )
+
         
         root.bind('<Escape>', lambda e: root.destroy())
