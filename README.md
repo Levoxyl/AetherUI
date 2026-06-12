@@ -1,3 +1,3 @@
-### AetherUI
+# AetherUI
 ## Description
 A visual hacker inspired app containing multiple types of mock-like high-tech surveilance systems for the goal of a roleplay feeling inside the movie life of every day agents and goverment tracked cyber criminals
