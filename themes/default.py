@@ -39,7 +39,7 @@ class DefaultTheme:
         # ** Bottom Panel
         self.bottom_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid',
                                      highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
-                                     )
+                                     highlightcolor=Colors.NEON_GREEN)
         self.bottom_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
         self.bottom_frame.grid_propagate(False)
         
