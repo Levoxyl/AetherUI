@@ -10,6 +10,7 @@ from visualization import VisualizationComponent
 from binary import BinaryComponent
 from hex import HexComponent
 from terminal import TerminalComponent
+from status import StatusComponent
 
 class DefaultTheme:
     def __init__(self, root, screen_w, screen_h):
@@ -24,16 +25,11 @@ class DefaultTheme:
         self.content_frame = tk.Frame(self.main_frame, bg='black')
         self.content_frame.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
         
-
-        # Total Weight = 2 (Row 0) + 1 (Row 1) = 3
-        # Top row 2/3 = 66%
-        # Bot row 1/3 = 33%
-
         self.content_frame.columnconfigure(0, weight=1) # Left
-        self.content_frame.rowconfigure(0, weight=2)    # Up
-        self.content_frame.rowconfigure(1, weight=1)    # Low
+        self.content_frame.rowconfigure(0, weight=4 ,uniform="screen_split")    # Up
+        self.content_frame.rowconfigure(1, weight=6, uniform="screen_split")    # Low
         
-       # ** Top Panel
+        # ** Top Panel
         self.viz_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
                                   highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
                                   )
@@ -43,7 +39,7 @@ class DefaultTheme:
         # ** Bottom Panel
         self.bottom_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid',
                                      highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
-                                    )
+                                     )
         self.bottom_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
         self.bottom_frame.grid_propagate(False)
         
@@ -51,7 +47,6 @@ class DefaultTheme:
         self.bottom_frame.columnconfigure(1, weight=1, uniform="lower_deck")
         self.bottom_frame.columnconfigure(2, weight=1, uniform="lower_deck")
         self.bottom_frame.rowconfigure(0, weight=1)
-
 
         self.term_sub_frame = tk.Frame(self.bottom_frame, bg='black')
         self.term_sub_frame.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
@@ -62,9 +57,20 @@ class DefaultTheme:
         self.binary_sub_frame = tk.Frame(self.bottom_frame, bg='black')
         self.binary_sub_frame.grid(row=0, column=2, sticky="nsew", padx=2, pady=2)
 
-        self.viz = VisualizationComponent(self.viz_frame, self.root)
+        self.binary_sub_frame.rowconfigure(0, weight=1, uniform="bin_row")
+        self.binary_sub_frame.rowconfigure(1, weight=1, uniform="bin_row")
+        self.binary_sub_frame.columnconfigure(0, weight=1)
 
-        # =========  D E S I G N   =========
+        self.bin_top = tk.Frame(self.binary_sub_frame, bg='black')
+        self.bin_top.grid(row=0, column=0, sticky="nsew")
+        
+        self.bin_bot = tk.Frame(self.binary_sub_frame, bg='black') 
+        self.bin_bot.grid(row=1, column=0, sticky="nsew")
+
+        self.viz = VisualizationComponent(self.viz_frame, self.root)
+        self.status = StatusComponent(self.bin_bot, self.root)
+
+        # =========  D E S I G N  =========
 
         hex_title_config = {
             "font": ('Courier New', 12, 'bold'),
@@ -87,7 +93,6 @@ class DefaultTheme:
             title_style=hex_title_config,
             text_style=hex_text_config
         ) 
-
 
         terminal_title_config = {
             "font": ('Courier New', 12, 'bold'),
@@ -128,7 +133,7 @@ class DefaultTheme:
         }
 
         self.binary = BinaryComponent(
-            self.binary_sub_frame,
+            self.bin_top,
             self.root,
             title_text="> BINARY STREAM",
             title_style=binary_title_config,
