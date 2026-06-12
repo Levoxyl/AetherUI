@@ -71,7 +71,7 @@ class HexComponent:
         total_lines = int(self.text.index('end-1c').split('.')[0])
         
         # Delete from the TOP (1.0 to 2.0) once buffer exceeds 25 lines
-        if total_lines > 25:
+        if total_lines > 50:
             self.text.delete('1.0', '2.0')
             total_lines -= 1
 
