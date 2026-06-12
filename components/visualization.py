@@ -7,9 +7,10 @@ from datetime import datetime
 from colors import Colors
 
 class VisualizationComponent:
-    def __init__(self, frame, root):
+    def __init__(self, frame, root,data_buffer=None):
         self.frame = frame
         self.root = root
+        self.data_buffer = data_buffer
         self.radar_angle = 0
         
         # Header Label
@@ -98,5 +99,8 @@ class VisualizationComponent:
         if random.random() < 0.1:
             n = random.choice(self.nodes)
             n["status"] = random.choice(["secure", "warning", "critical"])
+
+        if self.data_buffer is not None:
+            self.data_buffer.active_targets = [node["ip"] for node in self.nodes]
             
         self.root.after(50, self.updateSweep)

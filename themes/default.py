@@ -11,13 +11,18 @@ from binary import BinaryComponent
 from hex import HexComponent
 from terminal import TerminalComponent
 from status import StatusComponent
+from coordinate_calc import CoordinateCalcComponent
+
+class DataBuffer:
+    def __init__(self):
+        self.active_targets = []
 
 class DefaultTheme:
     def __init__(self, root, screen_w, screen_h):
         self.root = root
         self.screen_w = screen_w
         self.screen_h = screen_h
-        
+
         # =========   R O O T    C O N T A I N E R S   =========
         self.main_frame = tk.Frame(root, bg=Colors.NEON_GREEN, bd=5, relief='solid')
         self.main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
@@ -25,22 +30,32 @@ class DefaultTheme:
         self.content_frame = tk.Frame(self.main_frame, bg='black')
         self.content_frame.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
         
-        self.content_frame.columnconfigure(0, weight=1) # Left
-        self.content_frame.rowconfigure(0, weight=4 ,uniform="screen_split")    # Up
+        # Cleaned up top layout grid definition
+        self.shared_buffer = DataBuffer()
+        self.content_frame.rowconfigure(0, weight=4, uniform="screen_split")    # Up
         self.content_frame.rowconfigure(1, weight=6, uniform="screen_split")    # Low
-        
-        # ** Top Panel
+        self.content_frame.columnconfigure(0, weight=1, uniform="top_deck")     # Left Column
+        self.content_frame.columnconfigure(1, weight=1, uniform="top_deck")     # Center Column
+        self.content_frame.columnconfigure(2, weight=1, uniform="top_deck")     # Right Column
+
+        # Center Radar Frame (Moved to column 1)
         self.viz_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
-                                  highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
-                                  )
-        self.viz_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+                                  highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
+        self.viz_frame.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
         self.viz_frame.grid_propagate(False)
+
+        # Right Coordinates Frame (Added to column 2)
+        self.coord_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid', 
+                                    highlightbackground=Colors.NEON_GREEN, highlightthickness=1)
+        self.coord_frame.grid(row=0, column=2, sticky="nsew", padx=5, pady=5)
+        self.coord_frame.grid_propagate(False)
 
         # ** Bottom Panel
         self.bottom_frame = tk.Frame(self.content_frame, bg='black', bd=2, relief='solid',
                                      highlightbackground=Colors.NEON_GREEN, highlightthickness=1,
                                      highlightcolor=Colors.NEON_GREEN)
-        self.bottom_frame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+        # Add columnspan=3 right here:
+        self.bottom_frame.grid(row=1, column=0, columnspan=3, sticky="nsew", padx=5, pady=5)
         self.bottom_frame.grid_propagate(False)
         
         self.bottom_frame.columnconfigure(0, weight=1, uniform="lower_deck")
@@ -67,8 +82,10 @@ class DefaultTheme:
         self.bin_bot = tk.Frame(self.binary_sub_frame, bg='black') 
         self.bin_bot.grid(row=1, column=0, sticky="nsew")
 
-        self.viz = VisualizationComponent(self.viz_frame, self.root)
+        self.viz = VisualizationComponent(self.viz_frame, self.root, data_buffer=self.shared_buffer)
         self.status = StatusComponent(self.bin_bot, self.root)
+
+        self.coord_calc = CoordinateCalcComponent(self.coord_frame, self.root, data_buffer=self.shared_buffer)
 
         # =========  D E S I G N  =========
 
