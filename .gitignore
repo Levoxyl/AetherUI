@@ -1,2 +1,12 @@
 __pycache__/
 *.pyc
+
+# Python environment
+.venv/
+__pycache__/
+*.pyc
+
+# PyInstaller build outputs
+build/
+dist/
+*.spec
