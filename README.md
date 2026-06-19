@@ -24,7 +24,7 @@ A high-performance, immersive hacker terminal visualization dashboard. Engineere
 ## Install 
 <p align="center">
   <a href="https://github.com/Levoxyl/HackerVisual/releases/latest">
-    <img src="https://github.com/user-attachments/assets/f74d388b-e1e8-47b3-8c09-dbcb56f10ccd"/>
+    <img src="https://github.com/user-attachments/assets/42cdb63e-978b-4a8f-af82-dfadd3293956" alt="INSTALL HERE" width="100%"/>
   </a>
 </p>
 
@@ -33,15 +33,7 @@ A high-performance, immersive hacker terminal visualization dashboard. Engineere
   
 ## 🚀 Deployment
 
-You do **not** need Python, virtual environments, or pip dependencies installed to run AetherUI. Simply download the standalone pre-compiled executable matching your operating system.
-
-### 📦 Option 1: Fast Launch (Recommended)
-1. Head directly to the [Latest Releases](https://github.com/Levoxyl/HackerVisual/releases) page.
-2. Download your respective binary:
-   * **Windows:** `AetherUI-v1.0.0-Windows.exe` (Double-click to deploy)
-   * **Linux:** `AetherUI-v1.0.0-Linux` (Run `chmod +x AetherUI-v1.0.0-Linux && ./AetherUI-v1.0.0-Linux`)
-
-### 🛠️ Option 2: Build From Source (Developers)
+### Build From Source (Developers)
 If you want to modify the source code matrix or contribute modules:
 
 
