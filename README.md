@@ -1,6 +1,3 @@
-# AetherUI
-
-
 # ⚡ AetherUI - HackerVisual Engine
 
 A high-performance, immersive hacker terminal visualization dashboard. Engineered with strict OOP architecture, clean encapsulation layers, and dynamic polymorphism routines to deliver a sleek, modular movie-like desktop environment.
